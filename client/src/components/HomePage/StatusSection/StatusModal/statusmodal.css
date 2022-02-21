@@ -1,0 +1,242 @@
+.status-modal{
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 10;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0,0,0,.85);
+}
+
+.status-modal .form-status{
+    width: 100%;
+    max-width: 510px;
+
+    height: 100%;
+    
+    max-height: 650px;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.status-modal .form-status .status-header{
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom: 1px solid #ddd;
+
+    padding: 10px 0 ;
+}
+
+.status-modal .form-status .status-header h1{
+    font-size: 16px;
+    color: #262626;
+}
+
+.status-header #button-create-post{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    transform: translate(-30%, 30%);
+
+    color: #0095f6;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    outline: none;
+    background-color: transparent;
+
+    border: none;
+}
+
+.status-modal .close-status-modal{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    transform: translate(-100%, 100%);
+
+    color: White;
+    
+    font-size: 44px;
+}
+
+.status-modal .form-status .status-body{
+    padding: 15px 15px 0 15px;
+
+    border: 1px solid #DDD;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.status-modal .form-status .status-body .user-card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.status-modal .form-status .status-body .user-card .user_name{
+    font-size: 16px;
+    font-weight: 500;
+
+    margin-left: 10px;
+}
+
+.status-modal .form-status .status-body textarea{
+    outline: none;
+
+    min-height: 150px;
+    max-height: 160px;
+
+    overflow: auto;
+
+    border: none;
+
+    resize: none;
+}
+
+.status-modal .form-status .upload-images{
+    position: relative;
+
+    margin-top: 15px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.status-modal .form-status .upload-images .file-upload{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.status-modal .form-status .upload-images #file{
+    width: 150px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    transform: translateX(123%);
+
+    visibility: none;
+    opacity: 0;
+
+    cursor: pointer;
+}
+
+.status-modal .form-status .upload-images button{
+    background: #0095f6;
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    outline: none;
+
+    padding: 4px 5px;
+
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.status-modal .form-status .upload-images i{
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    transform: translate(250%, -17%);
+
+    font-size: 40px;
+
+    margin-right: 15px;
+}
+
+/* ------CSS for show images div-------- */
+
+.status-modal .form-status .show-images{
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+    max-height: 330px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.status-modal .form-status .show-images .show-images-item{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.status-modal .form-status .show-images .show-images-item img{
+   object-fit: contain;
+   display: inline-block;
+   width: 100%;
+   height: 100%;
+}
+
+.status-modal .form-status .show-images .show-images-item .delete-image{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    transform: translate(-30%, 30%);
+
+    width: 25px;
+    height: 25px;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #DDD;
+    border-radius: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+
+    color: #8E8E8E;
+
+    cursor: pointer;
+}
+
+.status-modal .form-status .show-images .show-images-item .delete-image:hover{
+   background-color: #FAFAFA;
+}

@@ -1,0 +1,16 @@
+.comment-display-container{
+    position: relative;
+
+    width: 580px;
+    height: auto;
+
+    margin: 0 16px;
+}
+
+.comment-display-container .reply-comment-container{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    padding-left: 24px;
+}

@@ -1,0 +1,16 @@
+.comment-menu-container{
+    position: relative;
+}
+
+#comment-menu-link {
+    font-size: 18px;
+    font-weight: 500;
+
+    color: #8E8E8E;
+}
+
+.comment-menu-container .dropdown-item span{
+    font-size: 16px;
+
+    color: #262626;
+}

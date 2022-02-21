@@ -1,0 +1,22 @@
+button{
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+    background-color: transparent;
+    border: 1px solid rgba(var(--ca6,219,219,219),1);
+    color: rgba(var(--f75,38,38,38),1);
+    position: relative;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px 9px;
+}
+
+.follow-button{
+    background-color: rgba(var(--d69,0,149,246),1);
+    color: #FFFFFF;
+}
+
+.unfollow-button{
+    color: #262626;
+}

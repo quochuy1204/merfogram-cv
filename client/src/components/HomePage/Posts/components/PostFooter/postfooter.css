@@ -1,0 +1,15 @@
+.post-body-timestamp .timestamp{
+    margin: 10px 16px;
+
+    color: #8E8E8E;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+}
+
+.post-footer-container{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}

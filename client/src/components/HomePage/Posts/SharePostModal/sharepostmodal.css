@@ -1,0 +1,106 @@
+.share-post-container{
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+
+    position: fixed;
+
+    top:0;
+    left: 0;
+
+    background-color: #0008;
+
+    z-index: 13;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    overflow: auto;
+
+    scroll-behavior: smooth;
+}
+
+/* ------CSS for the hole share post----- */
+
+.share-post-container .share-post{
+    width: 300px;
+    height: 300px;
+
+    background-color: #FFFFFF;
+
+    border: 0px solid transparent;
+    border-radius: 5%;
+    
+    overflow: auto;
+
+    display: block;
+}
+
+/* --------CSS for the share post header-------- */
+
+.share-post-container .share-post .share-post-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    height: 40px;
+
+    position: relative;
+
+    border-bottom: 1px solid #DDDDDD;
+}
+
+
+.share-post-container .share-post .share-post-header .header-span{
+    font-size: 16px;
+    font-weight: 500;
+
+    color: #262626;
+}
+
+.share-post-container .share-post .share-post-header .close-button{
+    position: absolute;
+
+    top: 0%;
+    right: 0%;
+
+    transform: translate(-100%, 50%);
+
+    font-size: 24px;
+    color: #8E8E8E;
+}
+
+/* ----------CSS for share post body------- */
+
+.share-post-container .share-post .share-post-body{
+    padding: 0 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.share-post-container .share-post .share-post-body .share-post-detail{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    margin-top: 15px;
+}
+
+.share-post-container .share-post .share-post-body .share-post-detail .title-span{
+    height: 100%;
+
+    margin: auto auto;
+
+    color: #262626;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+

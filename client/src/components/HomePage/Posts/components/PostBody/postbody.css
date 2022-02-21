@@ -1,0 +1,138 @@
+.post-body-card{
+    position: relative;
+}
+
+/* -------images slider-------- */
+
+.post-body-card .post-body-images{
+    width: 100%;
+    height: auto;
+    
+    margin-bottom: 25px;
+}
+
+.post-body-card .post-body-images .banned-container{
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+}
+.banned-container .banned-title{
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    padding: 10px;
+
+    border: 0 solid transparent;
+    border-radius: 14px;
+
+    color: #262626;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.banned-container .banned-reason{
+    margin: 10px 20px;
+
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    padding: 10px;
+
+    border: 0 solid transparent;
+    border-radius: 14px;
+
+    color: #262626;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.banned-container .banned-image{
+    width: 256px;
+
+    opacity: 0.6;
+
+    object-fit: contain;
+}
+
+
+/* ------ reaction section------- */
+
+.post-body-card .post-body-reaction{
+    margin: 6px 0;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.post-body-card .post-body-reaction i{
+    font-size: 24px;
+
+    color: #262626;
+
+    cursor: pointer;
+}
+
+.post-body-card .post-body-reaction i:hover{
+    opacity: 0.7;
+}
+
+/* -----like - comment section -------- */
+.post-body-card .post-body-like-comment{
+    margin: 0 16px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* -------like number section------- */
+.post-body-card .post-body-like-comment .post-body-like-number span{
+    font-size: 14px;
+
+    color: #262626;
+
+    font-weight: 600;
+}
+
+/* --------comment number section------- */
+.post-body-card .post-body-like-comment .post-body-comment-number span{
+    font-size: 14px;
+
+    color: #262626;
+
+    font-weight: 600;
+}
+
+/* -----------caption section-------- */
+.post-body-card .post-body-caption{
+    padding: 6px 16px;
+}
+
+.post-body-card .post-body-caption .caption{
+    font-size: 14px;
+
+    color: #262626;
+}
+
+.post-body-card .post-body-caption .caption .user-name{
+    text-decoration: none;
+
+    color: #262626;
+    
+    font-weight: 600;
+}
+
+.post-body-card .post-body-caption .caption .user-name:hover{
+    text-decoration: underline;
+}
+
+.post-body-card .post-body-caption .read-more-button{
+    color: #8E8E8E;
+}

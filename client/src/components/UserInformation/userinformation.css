@@ -1,0 +1,115 @@
+.infor{
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.infor_container{
+    display: grid;
+    grid-template-columns: auto 565px;
+}
+
+.infor_container .user-avarta{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+    height: 100%;
+}
+
+.infor_container .user-avarta img{
+    object-fit: cover;
+}
+
+.infor_content{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.infor_content .infor_content_title .user_name{
+    display: block;
+
+    overflow: hidden;
+
+    font-weight: 300;
+    font-size: 28px;
+    
+    margin-right: 20px;
+}
+
+.infor_content .infor_content_title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.infor_content .infor_content_title .btn_edit_profile{
+    display: block;
+    font-weight: 600;
+    background-color: transparent;
+    border: 1px solid rgba(var(--ca6,219,219,219),1);
+    color: rgba(var(--f75,38,38,38),1);
+    position: relative;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px 9px;
+}
+
+.follow_btn{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: rgba(var(--i1d,38,38,38),1);;
+}
+
+.follow_btn span{
+    margin-right: 40px;
+    font-size: 16px;
+}
+
+.follow_btn span b {
+    color: #262626;
+    font-weight: 600;
+}
+
+.infor_content_bio{
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.infor_content_bio .full_name{
+    display: inline;
+    font-weight: 600;
+    font-size: 16px;
+
+    color: #262626;
+}
+
+.infor_content .bio{
+    font-size: 16px;
+    display: inline;
+    margin-bottom: 8px;
+}
+
+.infor_content .website{
+    display: inline-block;
+    font-weight: 600;
+    text-decoration: none;
+
+    overflow: hidden;
+
+    color: rgba(var(--fe0,0,55,107),1);
+    
+    white-space: nowrap;
+
+    margin-bottom: 8px;
+
+    font-size: 16px;
+}

@@ -1,0 +1,52 @@
+.chat_text{
+    padding: 16px;
+
+    width: fit-content;
+
+    margin: 10px 0;
+}
+
+.chat_time{
+    font-size: 10px;
+    font-weight: 400;
+
+    color: #8E8E8E;
+}
+
+.display_image img,
+.display_image video{
+    margin: 6px 0;
+
+    width: 250px;
+    height: 300px;
+
+    object-fit: contain;
+}
+
+.you_content{
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.you_content .messsage_option{
+    margin-right: 15px;
+    opacity: 0;
+}
+
+.you_content:hover .messsage_option{
+    opacity: 0.6;
+}
+
+.you_content .messsage_option:hover{
+    opacity: 1;
+
+}
+
+.you_content .messsage_option .span_message_option{
+    color: #262626;
+
+    font-size: 1.3rem;
+}

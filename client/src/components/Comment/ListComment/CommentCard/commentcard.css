@@ -1,0 +1,134 @@
+.comment-card-container{
+    position: relative;
+
+    width: 100%;
+    max-width: 580px;
+
+    overflow-x: visible;
+
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin: 5px 0;
+}
+
+/* -------comment card left---- */
+.comment-card-container .comment-card-left{
+    display: flex;
+    flex-direction: row;
+}
+
+/* ---------user name ------ */
+.comment-card-left .username-link{
+    text-decoration: none;
+
+    color: #262626;
+}
+
+.comment-card-left .username{
+    color: #262626;
+
+    font-size: 16px;
+}
+
+.comment-card-left .username-link:hover{
+    text-decoration: underline;
+}
+
+/* .....comment card body--- */
+.comment-card-body{
+    display: inline-block;
+
+    margin-left: 10px;
+}
+
+.comment-card-body .comment-card-body-username{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* -----comment card body content---- */
+.comment-card-body-content{
+    width: 100%;
+    max-width: 500px;
+
+    margin-bottom: 10px;
+}
+
+.comment-card-body-content .content{
+    color: #262626;
+
+    font-size: 14px;
+    
+    line-height: 1;
+}
+
+.comment-card-body-content .edit-content-textarea{
+    width: 500px;
+    max-width: 500px;
+
+    overflow: auto;
+
+    resize: none;
+
+    border: none;
+
+    outline: none;
+}
+
+/* --------- comment card reaction----*/
+.comment-card-body-reaction{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.comment-card-body-reaction span{
+    color: #8E8E8E;
+
+    font-size: 12px;
+
+    margin-right: 12px;
+}
+
+.comment-card-body-reaction .comment-likes{
+    font-weight: 500;
+}
+
+.comment-card-body-reaction .comment-reply-button{
+    font-weight: 500;
+}
+
+/* -------- comment menu---- */
+.comment-card-container .comment-menu{
+    opacity: 0;
+}
+
+.comment-card-container:hover .comment-menu{
+    opacity: 1;
+}
+
+/* -----------comment card reply------ */
+.comment-card-container .comment-card-body-reply{
+    display: flex;
+    flex-direction: row;
+    
+    margin-top: 10px;
+
+    width: 450px;
+}
+
+.comment-card-container .form-reply{
+    width: 100%;
+}
+
+.comment-card-container .reply-to-span{
+    color: #8E8E8E;
+
+    margin-left: 16px;
+}

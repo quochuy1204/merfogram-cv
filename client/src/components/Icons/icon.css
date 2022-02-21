@@ -1,0 +1,13 @@
+.reactions{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    place-items: center;
+
+}
+.reactions span{
+    margin: 4px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}

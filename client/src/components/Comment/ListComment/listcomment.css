@@ -1,0 +1,9 @@
+.comment-container .post-link{
+    text-decoration: none;
+
+    margin-left: 16px;
+}
+
+.comment-container .view-all-comment-span{
+    color: #8E8E8E;
+}

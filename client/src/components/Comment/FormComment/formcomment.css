@@ -1,0 +1,63 @@
+.form-comment-container {
+    width: 100%;
+    height: auto;
+}
+
+.form-comment-container .form-input-comment{
+    width: 100%;
+    height: fit-content;
+    max-height: 150px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+
+    padding: 6px 16px;
+
+}
+
+.form-comment-container .form-input-comment textarea::placeholder{
+    color: #8E8E8E;
+
+    font-weight: 400;
+
+    opacity: 0.7;
+    
+}
+
+.form-comment-container .form-input-comment textarea{
+    width: 100%;
+
+    overflow: auto;
+
+    border: none;
+
+    outline: none;
+
+    resize: none;
+
+    transition: 0.4s ease-in-out;
+
+    color: #262626;
+
+    font-size: 14px;
+    font-weight: 400;
+
+    padding-top: 13px;
+}
+
+/* .form-comment-container .form-input-comment textarea:hover{
+    height: 144px !important;
+} */
+
+.button-post-comment{
+    border: none;
+
+    background-color: #FFFFFF;
+
+    color: #0095f6;
+
+    font-size: 14px;
+    font-weight: 600;
+}

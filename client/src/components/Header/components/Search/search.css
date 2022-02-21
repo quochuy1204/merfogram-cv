@@ -1,0 +1,86 @@
+.search-form {
+    position: relative;
+}
+
+.search-form #search{
+    background: #fafafa;
+    border: 1px solid #ddd;
+    min-width: 220px;
+    width: 100%;
+    outline: none;
+    text-indent: 30px;
+    min-height: 30px;
+    border-radius: 3px;
+    font-size: small;
+}
+
+.search-form .search-icon{
+    position: absolute;
+    top: 10%;
+    left: 35%;
+    font-size: small;
+    pointer-events: none;
+}
+
+.search-form .search-icon .material-icons{
+    font-size: medium;
+    transform: translateY(20%);
+}
+
+.search-form .close-search{
+    position: absolute;
+    top: 25%;
+    right: 5%;
+}
+
+.search-form .search-users{
+    border: 0px solid #FAFAFA;
+    border-radius: 10px;
+
+    background: #FFFFFF;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    margin-top: 8px;
+    position: fixed;
+
+    width: 100%;
+    min-width: 375px;
+    max-width: 375px;
+
+    max-height: 350px;
+    min-height: 350px;
+    overflow: auto;
+
+    transform: translateX(-20%);
+}
+
+/* ------------CSS for No result found text---------- */
+.search-users .no-result{
+    color: #8e8e8e;
+    text-align: center;
+    position: relative;
+}
+
+/* -------------CSS for custom scroll bar----------- */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #F1F1F1;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #C6C6C6;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #A8A8A8;
+}

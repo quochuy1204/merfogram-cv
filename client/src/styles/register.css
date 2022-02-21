@@ -1,0 +1,140 @@
+.auth-page {
+    width: 100%;
+    height: 100vh;
+    background: #FFFFFF;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.auth-page .register-section{
+    width: 500px;
+    height: 650px;
+
+    position: relative;
+
+    border: 0 solid transparent;
+    border-radius: 14px;
+
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px;
+}
+/* ----- CSS for deco top left */
+.register-section .deco-image-left{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    transform: translate(-30%, -30%);
+}
+
+.register-section .deco-image-left img{
+    width: 128px;
+}
+
+/* ----- CSS for deco top right  */
+.register-section .deco-image-right{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    transform: translate(10%, -7%);
+}
+
+.register-section .deco-image-right img{
+    width: 128px;
+}
+
+/* ----- CSS for deco bot left */
+.register-section .deco-image-bot-left{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    transform: translate(-5%, 5%);
+}
+
+.register-section .deco-image-bot-left img{
+    width: 128px;
+}
+
+/* ----- CSS for deco bot right */
+.register-section .deco-image-bot-right{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    transform: translate(10%, 5%);
+}
+
+.register-section .deco-image-bot-right img{
+    width: 128px;
+}
+
+/* CSS for logo merfogram */
+.auth-page .register-section .merfogram-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-page .register-section .logo{
+    width: 200px;
+}
+
+/* CSS for form */
+.auth-page .register-section .form-register{
+    width: 80%;
+    height: 400px;
+
+    margin-top: 30px;
+
+    border: 0 solid transparent;
+    border-radius: 14px;
+
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+
+    padding: 20px;
+}
+
+.form-register .button-register{
+    outline: none;
+
+    height: 34px;
+
+    border: none;
+
+    background-color: #0095F6;
+
+    color: #FFFFFF;
+}
+
+.form-register .form-input{
+    width: 100%;
+    height: 44px;
+
+    text-indent: 6px;
+
+    outline: none;
+
+    border: 1px solid #DDDDDD;
+    border-radius: 7px;
+
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    color: #262626;
+}

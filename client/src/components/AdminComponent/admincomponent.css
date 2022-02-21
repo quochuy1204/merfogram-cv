@@ -1,0 +1,69 @@
+.admin_page_container{
+    width: 100%;
+    height: calc(100vh - 100px);
+
+    margin-top: 15px;
+}
+
+.admin_page_container .admin_component{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.admin_component .admin_header{
+    width: 100%;
+    height: 150px;
+
+    border: 1px solid #DDDDDD;
+    border-radius: 6px;
+
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+
+}
+
+.admin_header .span_header{
+    width: 100%;
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom: 1px solid #DDDDDD;
+
+    color: #262626;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.admin_component .firgure_display{
+    width: 100%;
+    height: 120px;
+    
+    overflow: auto;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 6px;
+    place-items: center;
+
+}
+
+.manage_button{
+    width: 200px;
+    height: 100px;
+
+    box-shadow: 1px 1px 3px 1px #DDDDDD;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

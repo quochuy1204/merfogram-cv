@@ -1,0 +1,80 @@
+.post-header{
+    padding: 14px 16px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    width: 100%;
+}
+
+.post-header .user-card{
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.post-header .user-card .user-name h1{
+    margin-left: 14px;
+
+    font-size: 14px;
+
+    color: rgba(var(--f75,38,38,38),1);
+}
+
+.post-header .user-card .user-name h1 .user-name-link{
+    text-decoration: none;
+    
+    color: rgba(var(--f75,38,38,38),1);
+}
+
+.post-header .user-card .user-name h1 .user-name-link:hover{
+    text-decoration: underline;
+}
+
+#moreLink{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.dropdown-menu{
+    width: 100%;
+    max-width: fit-content;
+ 
+    overflow: auto;
+ 
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 5px 5px 0px;
+ 
+    outline: none;
+ 
+    border: 1px solid #FAFAFA;
+ 
+    background: #FFFFFF;
+}
+
+.dropdown-item{
+   
+    color: #262626;
+    font-size: 14px;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.dropdown-item span{
+    margin-left: 5px;
+
+    cursor: pointer;
+}
+
+.dropdown-item:hover{
+    background: #FAFAFA;
+}

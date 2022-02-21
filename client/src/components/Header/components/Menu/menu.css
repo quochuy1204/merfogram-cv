@@ -1,0 +1,77 @@
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+
+.menu .dropdown img{
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.menu li{
+    opacity: 0.9;
+}
+
+.menu .icon{
+    font-size: 28px;
+}
+
+.menu .dropdown-icon{
+    font-size: 18px;
+    transform: translateY(3px);
+    margin-right: 10px;
+}
+
+.menu .dropdown-menu{
+   position: absolute;
+   left: inherit;
+   right: 0;
+
+   min-width: 230px;
+   max-width: 230px;
+
+   overflow: auto;
+
+   box-shadow: rgba(99, 99, 99, 0.2) 0px 5px 5px 0px;
+
+   outline: none;
+
+   border: 1px solid #FAFAFA;
+
+   background: #FFFFFF;
+
+
+}
+
+.menu .dropdown-item{
+    color: #262626;
+    font-size: 14px;
+}
+
+.menu .dropdown-item:hover{
+    background: #FAFAFA;
+}
+
+/* ----------CSS for notify length----------- */
+.notify-length{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    color: #FFFFFF;
+
+    font-size: 12px;
+
+    border: 1px solid black;
+
+    background-color: black;
+    
+    padding: 3px;
+
+    border-radius: 50%;
+}

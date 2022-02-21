@@ -1,0 +1,50 @@
+.suggestion-container{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    position: relative;
+}
+
+.suggestion-container .suggestion-user-section {
+    margin-top: 20px;    
+}
+
+.suggestion-container .suggestion-user-section .suggestion-title{
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #8E8E8E;
+}
+
+/* --------CSS for introduction section---- */
+.suggestion-container .introduction-section{
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.suggestion-container .introduction-section span{
+    color: #C7C7C7;
+
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.suggestion-container .introduction-section .contact-section{
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.suggestion-container .introduction-section .contact-section a{
+    margin-left: 6px;
+}
+

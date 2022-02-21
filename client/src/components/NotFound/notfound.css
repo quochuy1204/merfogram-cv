@@ -1,0 +1,11 @@
+.notfound-page{
+    position: relative;
+    min-height: calc(100vh - 70px);
+}
+
+.notfound-page h5{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

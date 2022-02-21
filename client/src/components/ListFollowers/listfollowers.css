@@ -1,0 +1,184 @@
+/* .follow{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #0008;
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+}
+
+.follow_box{
+    width: 350px;
+    height: 400px;
+    border: 1px solid #222;
+    border-radius: 5px;
+    background: white;
+    padding: 20px 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}
+
+.follow_box .close{
+    position: absolute;
+    top: 0;
+    right: 3px;
+    font-size: 3rem;
+    cursor: pointer;
+} */
+
+/* .follow-page{
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    z-index: 10;
+
+    background-color: rgba(0,0,0,.85);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.follow-page .follow-box{
+    position: relative;
+
+    width:100%;
+    max-width: 400px;
+    min-width: 300px;
+
+    height: 100%;
+    max-height: 400px;
+    min-height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    background: #FFFFFF;
+    border: 0 solid #000;
+    border-radius: 14px;
+
+    color: rgba(var(--i1d,38,38,38),1);
+
+    overflow: auto;
+}
+
+.follow-page .follow-box .follow-box-header{
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 0.5px solid #828282;
+}
+
+.follow-page .follow-box .follow-box-header h1{
+    font-size: 16px;
+    color: #262626;
+    font-weight: 500;
+}
+
+.follow-page .follow-box .follow-box-header .close-button{
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    transform: translate(-100%, 50%);
+
+    cursor: pointer;
+
+    font-size: 30px;
+
+    width: fit-content;
+    height: fit-content;
+
+} */
+
+.follow-page{
+    position: fixed;
+
+    width: 100%;
+    height: 100vh;
+
+    top:0;
+    left: 0;
+
+    background-color: rgba(0,0,0,.85);
+
+    z-index: 10;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.follow-page .follow-box{
+    width: 400px;
+    height: 400px;
+
+    background-color: #FFFFFF;
+
+    border: 0px solid transparent;
+    border-radius: 14px;
+
+    overflow-y: auto;
+
+}
+
+.follow-box .follow-box-header{
+    width: 100%;
+    height: 44px;
+
+    position: sticky;
+    top: 0;
+
+    background-color: #FFFFFF;
+
+    border-bottom: 1px solid #DDDDDD;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 10;
+}
+
+.follow-box-header h1{
+    color: #262626;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.follow-box-header .close-button{
+    cursor: pointer;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    color: #262626;
+    
+    font-size: 33px;
+    font-weight: 500;
+
+    transform: translate(-50%, 50%);
+}
+

@@ -1,0 +1,17 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading svg {
+    font-size: 3px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    animation: text 1.5s ease-in-out infinite;
+}
+
+@keyframes text {
+    50%{opacity: 0.1}
+}
+

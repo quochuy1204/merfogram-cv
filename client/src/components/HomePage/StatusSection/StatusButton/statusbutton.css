@@ -1,0 +1,36 @@
+.status-button{
+    top: 75px;
+    
+    position: sticky;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    background: #FFFFFF;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 5px;
+
+    border: 0 solid transparent;
+    border-radius: 5px;
+
+    box-shadow: rgba(99, 99, 99, 0.2) 3px 3px 3px 1px;
+    /* box-shadow: 0px 0px 3px #ddd; */
+
+    z-index: 5;
+}
+
+.status-button:hover {
+    background: #FAFAFA;
+    box-shadow: rgba(99, 99, 99, 0.2) 1px 1px 0px 0px;
+}
+
+
+
+
+
+
+
+
