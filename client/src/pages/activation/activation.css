@@ -1,0 +1,96 @@
+/* CSS for the activation page */
+.activation-page {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CSS for activation-container */
+.activation-container {
+    width: 700px;
+    min-height: 350px;
+
+    border: 0 solid transparent;
+    border-radius: 14px;
+
+    box-shadow: 1px 1px 3px 1px #DDD;
+}
+
+/* CSS for header container */
+.header-container {
+    min-height: 56px;
+
+    padding: 10px 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* CSS for body container */
+.body-container {
+    padding: 10px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.body-container .text {
+    color: #262626;
+
+    font-weight: 400;
+    font-size: 1rem;
+
+    line-height: 1.5;
+}
+
+.body-container .heading {
+    color: #262626;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+}
+
+/* CSS for Merfogram Logo */
+.merfogram-logo {
+    height: 56px;
+
+    object-fit: contain;
+}
+
+/* CSS for icon */
+.color-icon {
+    width: 25px;
+}
+
+/* CSS for button login */
+.button-redirect-to-login {
+    width: 120px;
+    height: 48px;
+
+    margin-bottom: 10px;
+
+    border: 0 solid transparent;
+    border-radius: 14px;
+
+    box-shadow: 1px 1px 3px 1px #DDD;
+
+    text-decoration: none;
+
+    color: #262626;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.button-redirect-to-login:hover {
+    color: #262626;
+}

@@ -11,6 +11,7 @@ function Home(props) {
     useEffect(() => {
         document.title = 'Merfogram'
     }, [])
+
     return (
         <div className="home-page">
             <StatusButton />

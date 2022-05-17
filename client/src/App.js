@@ -9,14 +9,16 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Alert from './components/Alert/Alert';
 import Header from './components/Header/Header';
-import Register from './pages/register'
+import RedirectPage from './pages/redirect'
 
+// Modal
 import StatusModal from './components/HomePage/StatusSection/StatusModal/StatusModal';
 import EditPostModal from './components/HomePage/Posts/EditPostModal/EditPostModal';
 import SharePostModal from './components/HomePage/Posts/SharePostModal/SharePostModal';
 import NotificationModal from './components/Notification/NotificationModal';
 import ManageUserModal from './components/AdminComponent/ManageUser/ManageUserModal/ManageUserModal';
 import ChangePassword from './components/ChangePasswordModal/ChangePassword';
+import ManageReportModal from './components/AdminComponent/ManageReport/ManageReportModal/ManageReportModal';
 
 import { refreshToken, checkIsBlockedUser } from './redux/actions/authenticationAction'
 import { getPosts } from './redux/actions/postAction'
@@ -26,12 +28,12 @@ import { GLOBALTYPES } from './utils/globalTypes';
 
 import SocketClient from './SocketClient';
 import io from 'socket.io-client';
+import ReportPostModal from './components/HomePage/Posts/ReportPostModal/ReportPostModal';
 
 
 function App() {
   // Lấy về state.authentication hiện tại đang có trong store
   const { authentication, status, homepagePost, notify, administrator, profile } = useSelector(state => state)
-
 
   const dispatch = useDispatch()
 
@@ -121,6 +123,8 @@ function App() {
           {notify.open_notification_modal === true && <NotificationModal />}
           {administrator.open_manage_user_modal && <ManageUserModal />}
           {profile.change_password_modal === true && <ChangePassword />}
+          {homepagePost.openReportModal.open && <ReportPostModal />}
+          {administrator.manage_report.open_modal === true && <ManageReportModal />}
 
           {/* <Route exact path="/adminpanel" component={authentication.token && authentication.role === 1 && AdminPage} /> */}
           {/* <Route exact path="/register" component={Register} /> */}
@@ -131,7 +135,7 @@ function App() {
           <Route exact path="/:page" component={authentication.token ? PageReducer : Login} /> */}
 
           <Route exact path="/" component={authentication.token ? Home : Login} />
-          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={RedirectPage} />
 
           <PrivateRouter exact path="/:page" component={PageReducer} />
           <PrivateRouter exact path="/:page/:id" component={PageReducer} />

@@ -13,4 +13,8 @@ router.patch('/user/:id/unfollow', authentication, userController.unfollowUser)
 router.get('/suggestionUser', authentication, userController.suggestionUser);
 
 router.post('/user/changepassword', authentication, userController.changePassword)
+
+// Quoc Huy Updated Router Date 05/05/2022
+router.post('/report_post', authentication, userController.reportPost)
+
 module.exports = router

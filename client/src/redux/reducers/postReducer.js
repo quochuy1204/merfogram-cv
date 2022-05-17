@@ -6,7 +6,11 @@ const initialState = {
     page: 4,
     editPost: {},
     openEditModal: false,
-    sharePost: false
+    sharePost: false,
+    openReportModal: {
+        open: false,
+        data: {}
+    }
 }
 
 const postReducer = (state = initialState, action) => {
@@ -54,6 +58,14 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 sharePost: action.payload
+            }
+        case TYPES.OPEN_REPORT_MODAL:
+            return {
+                ...state,
+                openReportModal: {
+                    open: action.payload.open,
+                    data: action.payload.data
+                }
             }
         default:
             return state;

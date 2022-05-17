@@ -1,5 +1,7 @@
 const userModel = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const reportModel = require('../models/reportModel')
+const postModel = require('../models/postModel')
 
 const userController = {
     searchUser: async (req, res) => {
@@ -166,6 +168,60 @@ const userController = {
         } catch (error) {
             return res.status(500).json({ message: error.message });
         }
+    },
+    // Quoc Huy Updated Functional Date 05/05/2022
+    reportPost: async (req, res) => {
+        try {
+            // Lấy ra report được gửi từ client về server
+            const report = req.body
+
+            // Kiểm tra xem có giá trị report hay không?
+            if (!report) {
+                return res.status(400).json({ message: "Your reportation is not valid." })
+            }
+
+            // Nếu có report thì kiểm tra xem giá trị report_content trong report có tồn tại hay không?
+            if (!report.report_content) {
+                return res.status(400).json({ message: "Please choose your reason." })
+            }
+
+            // Lấy ra các giá trị tương tứng có trong report
+            const { reporter_id, target_id, report_content } = report
+
+            // Kiểm tra xem post bị report có tồn tại hay không
+            // (Vì có thể chủ post đã xóa post đi)
+            const checkPost = await postModel.findOne({ _id: target_id })
+
+            // Nếu post bị report không tồn tại dưới database thì return về lỗi
+            if (!checkPost) {
+                return res.status(400).json({ message: "This post does't exist." })
+            }
+
+            // Kiểm tra xem report đã tồn tại dưới Database với cùng người report và cùng nội dùng hay không?
+            const checkReport = await reportModel.find({ reporter_id: reporter_id, target_id: target_id })
+
+
+            if (checkReport) {
+                const check = checkReport.find(item => item.report_content === report_content)
+                if (check) {
+                    return res.status(400).json({ message: "You already report this post with the same reason." })
+                }
+            }
+
+            // Tạo thực thể reportModel mới với nội dung được gửi lên server từ client
+            const newReport = new reportModel(report)
+
+            // Insert report vào Database
+            await newReport.save()
+
+            res.json({
+                success: 'Reported!'
+            })
+
+        } catch (error) {
+            return res.status(500).json({ message: error.message })
+        }
+    // End Work for Date 05/05/2022
     }
 }
 

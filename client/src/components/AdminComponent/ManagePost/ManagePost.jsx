@@ -7,7 +7,7 @@ import moment from 'moment'
 
 // import { getAPIs } from '../../../utils/fetchAPIs'
 // import { ADMIN_TYPES } from '../../../redux/actions/adminAction'
-import { getAllPosts, searchByPostOwner, blockPostAdmin, unblockPostAdmin } from '../../../redux/actions/adminAction'
+import { getAllPosts, blockPostAdmin, unblockPostAdmin } from '../../../redux/actions/adminAction'
 
 import './managepost.css'
 
@@ -15,33 +15,30 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 function ManagePost(props) {
+    // Get the authentication and administrator state from store
     const { authentication, administrator } = useSelector(state => state)
 
     const dispatch = useDispatch()
 
-    // Khởi tạo state để chứa text cho thanh search owner_username
-    const [searchUsername, setSearchUsername] = useState('')
+    // Create state named searchUsername and it own set functional to store the search by creator username value
+    const [searchByCreator, setSearchByCreator] = useState('')
 
-    // Khởi tạo state để chứa text cho thanh search by post_id
-    // const [searchById, setSearchById] = useState('')
+    // Create the state named searchById and it own set functional to store the search by post id value
+    const [searchById, setSearchById] = useState('')
 
-    // Hàm xử lí mỗi khi component được render
+    // Create state status to store the status value of report
+    const [status, setStatus] = useState('')
+
+    // Create state sort to store the sort by createdAt value
+    const [sort, setSort] = useState('')
+
+
+    // Once the component rendered, dispatch the getAllPosts Thunk Action to Reducer to get all of the posts 
     useEffect(() => {
-        dispatch(getAllPosts({ authentication }))
+        dispatch(getAllPosts({ authentication, searchByCreator, searchById, status, sort }))
+    }, [authentication, dispatch, searchByCreator, searchById, status, sort])
 
-    }, [authentication, dispatch])
-
-    // Hàm xử lí khi admin search user
-    useEffect(() => {
-        if (searchUsername) {
-
-            dispatch(searchByPostOwner({ authentication, searchUsername }))
-        }
-        else {
-            setSearchUsername('')
-        }
-    }, [searchUsername, dispatch, authentication])
-
+    // Function to handle when admin click on the Block Post Button
     const handleBlockPostAdmin = async ({ post }) => {
         console.log({ post })
         confirmAlert({
@@ -64,8 +61,8 @@ function ManagePost(props) {
         })
     }
 
+    // Function to handle when admin click on the Unblock post
     const handleUnblockPostAdmin = ({ post }) => {
-        console.log({ post })
         confirmAlert({
             title: 'Unblock post',
             message: 'Are you want to unblock this post?',
@@ -85,6 +82,35 @@ function ManagePost(props) {
             ]
         })
     }
+
+    // Function to handle when admin make changed to searchByCreator
+    const handleOnChangeSearchByCreator = (event) => {
+        setSearchByCreator(event.target.value)
+    }
+
+    // Function to handle when admin make changed to searchById
+    const handleOnChangeSearchByID = (event) => {
+        setSearchById(event.target.value)
+    }
+
+    // Function to handle on change sort
+    const handleOnChangeSort = (event) => {
+        setSort(event.target.value)
+    }
+
+    // Function to handle on change status event listener
+    const handleOnChangeStatus = (event) => {
+        setStatus(event.target.value)
+    }
+
+    useEffect(() => {
+        console.log(searchByCreator)
+    }, [searchByCreator])
+
+    useEffect(() => {
+        console.log(searchById)
+    }, [searchById])
+
     return (
         <div className='manage_container'>
             <div className='manage_header'>
@@ -95,13 +121,30 @@ function ManagePost(props) {
                 </div>
 
                 <div className='manage_search'>
-                    <form className='form_manage'>
-                        <span className='span_manage_search'>Search: </span>
+                    <form style={{ width: '250px' }} className='form_manage'>
 
-                        <input autoComplete='disable' className='formManageInput' type="text" placeholder="Enter post's creator username" name='search' value={searchUsername} onChange={(e) => setSearchUsername((e.target.value))} ></input>
+                        <input autoComplete='disable' className='formManageInput' type="text" placeholder="Enter post's creator" name='search' value={searchByCreator} onChange={handleOnChangeSearchByCreator} ></input>
 
                         <button id="button_search_manage" type='submit'><i className="fas fa-search"></i></button>
                     </form>
+
+                    <form style={{ width: '250px' }} className='form_manage'>
+
+                        <input autoComplete='disable' className='formManageInput' type="text" placeholder="Enter post's ID" name='search' value={searchById} onChange={handleOnChangeSearchByID} ></input>
+
+                        <button id="button_search_manage" type='submit'><i className="fas fa-search"></i></button>
+                    </form>
+
+                    <select className='sort-status' name='status' value={status} onChange={handleOnChangeStatus}>
+                        <option value="">Choose status</option>
+                        <option value="isDeleted=false" >Active</option>
+                        <option value="isDeleted=true" >Blocked</option>
+                    </select>
+
+                    <select className='sort-date' name='sort' value={sort} onChange={handleOnChangeSort}>
+                        <option value="">Newest</option>
+                        <option value="sort=oldest" >Oldest</option>
+                    </select>
                 </div>
             </div>
 
@@ -123,177 +166,90 @@ function ManagePost(props) {
                         <tbody>
 
                             {
-                                searchUsername.length > 0
-                                    ?
-                                    administrator.search_posts.map(post => (
-                                        <tr key={post._id} >
+                                administrator.all_posts.map(post => (
+                                    <tr key={post._id} >
 
-                                            <td style={{
-                                                maxWidth: '145px',
-                                                overflow: 'hidden'
-                                            }} className='text-center' >
-                                                <p style={{
-                                                    color: '#262626',
-                                                    fontSize: '10px',
-                                                    fontWeight: '500',
-                                                }}>{post._id}</p>
-                                            </td>
-
-                                            <td className='text-center' >
-                                                <Link to={`/post/${post._id}`}>
-                                                    <img style={{
-                                                        width: '70px',
-                                                        height: '70px',
-                                                        objectFit: 'cover'
-                                                    }} src={post.images[0].url} alt="post" />
-                                                </Link>
-                                            </td>
-
-                                            <td className='text-center' style={{
-                                                maxWidth: '250px',
-                                                overflow: 'hidden',
+                                        <td style={{
+                                            maxWidth: '145px',
+                                            overflow: 'hidden'
+                                        }} className='text-center' >
+                                            <p style={{
                                                 color: '#262626',
-                                                fontSize: '14px'
-                                            }} >
-                                                {
-                                                    post.caption.length > 200
-                                                        ?
-                                                        post.caption.slice(0, 200) + ' ...'
-                                                        :
-                                                        post.caption
-                                                }
-                                            </td>
+                                                fontSize: '10px',
+                                                fontWeight: '500',
+                                            }}>{post._id}</p>
+                                        </td>
 
-                                            <td className='text-center' style={{
-                                                maxWidth: '240px',
-                                                overflow: 'hidden',
-                                                color: '#262626',
-                                                fontSize: '14px',
-                                                fontWeight: '500'
-                                            }} >
-                                                {
-                                                    post.user.user_name
-                                                }
-                                            </td>
+                                        <td className='text-center' >
+                                            <Link to={`/post/${post._id}`}>
+                                                <img style={{
+                                                    width: '70px',
+                                                    height: '70px',
+                                                    objectFit: 'cover'
+                                                }} src={post.images[0].url} alt="post" />
+                                            </Link>
+                                        </td>
 
-                                            <td className='text-center' style={{
-                                                color: '#262626',
-                                                fontSize: '12px'
-                                            }}>
-                                                {moment(post.createdAt).format('ll')}
-                                            </td>
+                                        <td className='text-center' style={{
+                                            maxWidth: '250px',
+                                            overflow: 'hidden',
+                                            color: '#262626',
+                                            fontSize: '14px'
+                                        }} >
+                                            {
+                                                post.caption.length > 200
+                                                    ?
+                                                    post.caption.slice(0, 200) + ' ...'
+                                                    :
+                                                    post.caption
+                                            }
+                                        </td>
 
-                                            <td className='text-center' >
-                                                {
-                                                    post.isDeleted === false
-                                                        ?
-                                                        <>
-                                                            <i className="fas fa-check-circle text-success"></i>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <i className="fas fa-ban text-danger"></i>
-                                                        </>
-                                                }
-                                            </td>
+                                        <td className='text-center' style={{
+                                            maxWidth: '240px',
+                                            overflow: 'hidden',
+                                            color: '#262626',
+                                            fontSize: '14px',
+                                            fontWeight: '500'
+                                        }} >
+                                            {
+                                                post.user.user_name
+                                            }
+                                        </td>
 
-                                            <td className='text-center' >
-                                                {
-                                                    post.isDeleted === false
-                                                        ?
-                                                        <button className='btn-danger m-auto' onClick={() => handleBlockPostAdmin({ post })}>Block</button>
-                                                        :
-                                                        <button className='btn-success m-auto' onClick={() => handleUnblockPostAdmin({ post })}>Unblock</button>
-                                                }
+                                        <td className='text-center' style={{
+                                            color: '#262626',
+                                            fontSize: '12px'
+                                        }}>
+                                            {moment(post.createdAt).format('ll')}
+                                        </td>
 
-                                            </td>
-                                        </tr>
-                                    ))
-                                    :
-                                    administrator.all_posts.map(post => (
-                                        <tr key={post._id} >
+                                        <td className='text-center' >
+                                            {
+                                                post.isDeleted === false
+                                                    ?
+                                                    <>
+                                                        <i className="fas fa-check-circle text-success"></i>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <i className="fas fa-ban text-danger"></i>
+                                                    </>
+                                            }
+                                        </td>
 
-                                            <td style={{
-                                                maxWidth: '145px',
-                                                overflow: 'hidden'
-                                            }} className='text-center' >
-                                                <p style={{
-                                                    color: '#262626',
-                                                    fontSize: '10px',
-                                                    fontWeight: '500',
-                                                }}>{post._id}</p>
-                                            </td>
+                                        <td className='text-center'>
+                                            {
+                                                post.isDeleted === false
+                                                    ?
+                                                    <button className='btn-danger m-auto' onClick={() => handleBlockPostAdmin({ post })}>Block</button>
+                                                    :
+                                                    <button className='btn-success m-auto' onClick={() => handleUnblockPostAdmin({ post })}>Unblock</button>
+                                            }
 
-                                            <td className='text-center' >
-                                                <Link to={`/post/${post._id}`}>
-                                                    <img style={{
-                                                        width: '70px',
-                                                        height: '70px',
-                                                        objectFit: 'cover'
-                                                    }} src={post.images[0].url} alt="post" />
-                                                </Link>
-                                            </td>
-
-                                            <td className='text-center' style={{
-                                                maxWidth: '250px',
-                                                overflow: 'hidden',
-                                                color: '#262626',
-                                                fontSize: '14px'
-                                            }} >
-                                                {
-                                                    post.caption.length > 200
-                                                        ?
-                                                        post.caption.slice(0, 200) + ' ...'
-                                                        :
-                                                        post.caption
-                                                }
-                                            </td>
-
-                                            <td className='text-center' style={{
-                                                maxWidth: '240px',
-                                                overflow: 'hidden',
-                                                color: '#262626',
-                                                fontSize: '14px',
-                                                fontWeight: '500'
-                                            }} >
-                                                {
-                                                    post.user.user_name
-                                                }
-                                            </td>
-
-                                            <td className='text-center' style={{
-                                                color: '#262626',
-                                                fontSize: '12px'
-                                            }}>
-                                                {moment(post.createdAt).format('ll')}
-                                            </td>
-
-                                            <td className='text-center' >
-                                                {
-                                                    post.isDeleted === false
-                                                        ?
-                                                        <>
-                                                            <i className="fas fa-check-circle text-success"></i>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <i className="fas fa-ban text-danger"></i>
-                                                        </>
-                                                }
-                                            </td>
-
-                                            <td className='text-center'>
-                                                {
-                                                    post.isDeleted === false
-                                                        ?
-                                                        <button className='btn-danger m-auto' onClick={() => handleBlockPostAdmin({ post })}>Block</button>
-                                                        :
-                                                        <button className='btn-success m-auto' onClick={() => handleUnblockPostAdmin({ post })}>Unblock</button>
-                                                }
-
-                                            </td>
-                                        </tr>
-                                    ))
+                                        </td>
+                                    </tr>
+                                ))
                             }
                         </tbody>
                     </table>

@@ -162,6 +162,154 @@ export const register = (data) => async (dispatch) => {
     }
 }
 
+// Quoc Huy - Created date 04/05/2022
+export const registerEmail = (data) => async (dispatch) => {
+    try {
+        const check = valid(data)
+        if (check.errLength > 0)
+            return dispatch({
+                type: 'ALERT',
+                payload: check.errMsg
+            })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await postAPIs('register', data)
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.msg
+            }
+        })
+
+    } catch (error) {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+
+export const activationEmail = (activationToken) => async (dispatch) => {
+    try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await postAPIs('activation_email', activationToken)
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.message
+            }
+        })
+    } catch (error) {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+
+export const forgotPassword = (email) => async (dispatch) => {
+    try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await postAPIs('forgot_password', email)
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.message
+            }
+        })
+
+    } catch (error) {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+
+export const resetPassword = ({ password, accessToken }) => async (dispatch) => {
+    try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await postAPIs('reset_password', { password }, accessToken)
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.message
+            }
+        })
+    } catch (error) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+
+// Quoc Huy - End created date 04/05/2022
+
 export const logout = () => async (dispatch) => {
     try {
         localStorage.removeItem('firstLogin')

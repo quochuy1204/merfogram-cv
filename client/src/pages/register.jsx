@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, Link } from 'react-router-dom'
-import { register } from '../redux/actions/authenticationAction'
+import { registerEmail } from '../redux/actions/authenticationAction'
 import '../styles/register.css'
 
 import Footer from '../components/Footer/Footer'
@@ -13,6 +13,7 @@ import TIGER1 from '../images/tiger1.png'
 import TIGER2 from '../images/tiger2.png'
 
 const Register = () => {
+    // Đổi title page thành Sign Up
     useEffect(() => {
         document.title = 'Sign Up • Merfogram'
     }, [])
@@ -53,7 +54,7 @@ const Register = () => {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        dispatch(register(newAccount))
+        dispatch(registerEmail(newAccount))
     }
 
     return (

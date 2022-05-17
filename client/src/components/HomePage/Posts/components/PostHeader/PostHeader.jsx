@@ -3,13 +3,18 @@ import Avatar from '../../../../Avarta/Avarta';
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
+// Import CSS 
 import 'bootstrap/dist/js/bootstrap.min'
 import './postheader.css'
 
+// Import Action
 import { deletePost } from '../../../../../redux/actions/postAction'
 import { blockPostAdmin, unblockPostAdmin } from '../../../../../redux/actions/adminAction'
+
+// Import Utils
 import { BASE_URL } from '../../../../../utils/config'
 
+// Import CSS
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
@@ -111,6 +116,16 @@ function PostHeader({ post }) {
         })
     }
 
+    const handleReportPost = () => {
+        dispatch({
+            type: 'OPEN_REPORT_MODAL',
+            payload: {
+                open: true,
+                data: post
+            }
+        })
+    }
+
     return (
         <div className="post-header">
             <div className="user-card">
@@ -183,6 +198,15 @@ function PostHeader({ post }) {
                     <div className="dropdown-item" onClick={handleCopyLink}>
                         <span className="material-icons">content_copy</span>    Copy Link
                     </div>
+                    {
+                        post.user._id !== authentication.user._id
+                        &&
+                        <div className="dropdown-item" onClick={handleReportPost}>
+                            <span className="material-icons text-danger">flag</span>    Report
+                        </div>
+                    }
+
+
 
                     {
                         authentication.role === 1

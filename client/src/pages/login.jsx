@@ -13,10 +13,12 @@ import TIGER1 from '../images/tiger1.png'
 import TIGER2 from '../images/tiger2.png'
 
 const Login = () => {
+    // Thay đổi title của page thành Login Merfogram
     useEffect(() => {
         document.title = 'Login • Merfogram'
     }, [])
 
+    // Lấy ra state authentication
     const { authentication } = useSelector(state => state)
 
     // Tạo Object state khởi tạo
@@ -102,7 +104,12 @@ const Login = () => {
                     <p className="my-2">
                         Don't have an account? <Link style={{ textDecoration: "none", fontSize: '14px', fontWeight: '500' }} to="/register">Sign up</Link>
                     </p>
+
+                    <p className="my-2">
+                        <Link style={{ textDecoration: "none", fontSize: '14px', fontWeight: '500' }} to="/forgot_password">Forgot your password?</Link>
+                    </p>
                 </div>
+
             </div>
 
             <Footer />

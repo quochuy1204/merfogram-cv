@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 
+// Utils API
 import { getAPIs } from '../../utils/fetchAPIs'
 
+// Styles
 import './admincomponent.css'
 
+// Components
 import ManagePost from './ManagePost/ManagePost';
 import ManageUser from './ManageUser/ManageUser';
+import ManageReport from './ManageReport/ManageReport';
 
 function AdminComponent(props) {
     const { authentication } = useSelector(state => state)
@@ -17,13 +21,20 @@ function AdminComponent(props) {
 
     const [userLength, setUserLength] = useState(0)
 
-    useEffect(() => {
-        getAPIs('admin/getallusers', authentication.token)
-            .then(res => setUserLength(res.data.result))
+    const [reportLength, setReportLength] = useState(0)
 
-        getAPIs('admin/getallposts', authentication.token)
-            .then(res => setPostLength(res.data.result))
-    }, [authentication.token])
+    useEffect(() => {
+        if (authentication.role === 1) {
+            getAPIs('admin/getallusers', authentication.token)
+                .then(res => setUserLength(res.data.result))
+
+            getAPIs('admin/getallposts', authentication.token)
+                .then(res => setPostLength(res.data.result))
+
+            getAPIs('admin/get_reports', authentication.token)
+                .then(res => setReportLength(res.data.result))
+        }
+    }, [authentication])
 
     return (
         <div className='admin_page_container'>
@@ -52,7 +63,7 @@ function AdminComponent(props) {
                         </button>
 
                         <button onClick={() => setChangeModal('report')} className='manage_button'>
-                            1000 Reports
+                            Total {reportLength} Reports
 
                             <i style={{ marginLeft: '6px', fontSize: '34px', color: '#ff7f50' }} className="fas fa-flag"></i>
                         </button>
@@ -70,6 +81,11 @@ function AdminComponent(props) {
                     {
                         changeModal === 'post' &&
                         <ManagePost />
+                    }
+
+                    {
+                        changeModal === 'report' &&
+                        <ManageReport />
                     }
                 </div>
 

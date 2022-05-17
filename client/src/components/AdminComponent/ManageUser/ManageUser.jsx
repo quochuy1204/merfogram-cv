@@ -6,7 +6,7 @@ import Avarta from '../../Avarta/Avarta'
 
 // import { getAPIs } from '../../../utils/fetchAPIs'
 import { ADMIN_TYPES } from '../../../redux/actions/adminAction'
-import { getAllUser, searchUser } from '../../../redux/actions/adminAction'
+import { getAllUser } from '../../../redux/actions/adminAction'
 
 import './manageuser.css'
 
@@ -19,22 +19,20 @@ function ManageUser(props) {
     // Khởi tạo state để chứa text cho thanh search
     const [search, setSearch] = useState('')
 
+    // Create state status to store the status value of user's account
+    const [status, setStatus] = useState('')
+
+    // Create state sort to store the sort by createdAt Date value
+    const [sort, setSort] = useState('')
+
+    // Create state role to store the sort by role value
+    const [role, setRole] = useState('')
+
     // Hàm xử lí mỗi khi component được render
     useEffect(() => {
-        dispatch(getAllUser({ authentication }))
+        dispatch(getAllUser({ authentication, search, status, role, sort }))
 
-    }, [authentication, dispatch])
-
-    // Hàm xử lí khi admin search user
-    useEffect(() => {
-        if (search) {
-
-            dispatch(searchUser({ authentication, search }))
-        }
-        else {
-            setSearch('')
-        }
-    }, [search, dispatch, authentication])
+    }, [authentication, dispatch, search, status, role, sort])
 
     // Hàm xử lý khi người dùng nhấn vào 1 user
     const handleChooseUser = (user) => {
@@ -47,6 +45,26 @@ function ManageUser(props) {
         })
     }
 
+    // Function to handle on change search state
+    const handleOnChangeSearch = (event) => {
+        setSearch((event.target.value).toLowerCase())
+    }
+
+    // Function to handle on change status event listener
+    const handleOnChangeStatus = (event) => {
+        setStatus(event.target.value)
+    }
+
+    // Function to handle on change sort
+    const handleOnChangeSort = (event) => {
+        setSort(event.target.value)
+    }
+
+    // Function to handle on change user role
+    const handleOnChangeRole = (event) => {
+        setRole(event.target.value)
+    }
+
     return (
         <div className='manage_container'>
             <div className='manage_header'>
@@ -57,13 +75,31 @@ function ManageUser(props) {
                 </div>
 
                 <div className='manage_search'>
-                    <form className='form_manage'>
+                    <form style={{ width: '350px' }} className='form_manage'>
                         <span className='span_manage_search'>Search: </span>
 
-                        <input autoComplete='disable' className='formManageInput' type="text" placeholder='Search user' name='search' value={search} onChange={(e) => setSearch((e.target.value).toLowerCase())} ></input>
+                        <input autoComplete='disable' className='formManageInput' type="text" placeholder='Search user' name='search' value={search} onChange={handleOnChangeSearch} ></input>
 
                         <button id="button_search_manage" type='submit'><i className="fas fa-search"></i></button>
                     </form>
+
+                    <select className='sort-status' name='status' value={status} onChange={handleOnChangeStatus}>
+                        <option value="">Choose status</option>
+                        <option value="isBlocked=0" >Active</option>
+                        <option value="isBlocked=1" >Blocked</option>
+                    </select>
+
+                    <select className='sort-date' name='sort' value={sort} onChange={handleOnChangeSort}>
+                        <option value="">Newest</option>
+                        <option value="sort=oldest" >Oldest</option>
+                    </select>
+
+
+                    <select className='sort-date' name='role' value={role} onChange={handleOnChangeRole}>
+                        <option value="">Choose Role</option>
+                        <option value="role=0">User</option>
+                        <option value="role=1" >Admin</option>
+                    </select>
                 </div>
             </div>
 
@@ -85,125 +121,65 @@ function ManageUser(props) {
                         <tbody>
 
                             {
-                                search.length > 0
-                                    ?
-                                    administrator.search_users.map(user => (
-                                        <tr key={user._id} >
-                                            <td className='text-center' >
-                                                <Avarta src={user.photo} size="small-avarta" />
-                                            </td>
 
-                                            <td className='text-center' >
-                                                <span onClick={() => handleChooseUser(user)} role="button">{user.user_name}</span>
-                                            </td>
+                                administrator.all_users.map(user => (
+                                    <tr key={user._id} >
+                                        <td className='text-center' >
+                                            <Avarta src={user.photo} size="small-avarta" />
+                                        </td>
 
-                                            <td style={{ fontSize: '14px', color: '#8E8E8E', fontWeight: '400', overflow: 'hidden' }} className='text-center' >
-                                                {user.full_name}
-                                            </td>
+                                        <td style={{ fontSize: '14px', color: '#262626', fontWeight: '500', overflow: 'hidden' }} className='text-center' >
+                                            <span onClick={() => handleChooseUser(user)} role="button">{user.user_name}</span>
+                                        </td>
 
-                                            <td className='text-center' style={{ fontSize: '14px', fontWeight: '500', color: '#262626', overflow: 'hidden' }} >
-                                                {user.email}
-                                            </td>
+                                        <td style={{ fontSize: '14px', color: '#8E8E8E', fontWeight: '400', overflow: 'hidden' }} className='text-center' >
+                                            {user.full_name}
+                                        </td>
 
-                                            <td className='text-center' style={{ fontStyle: 'italic' }} >
-                                                {moment(user.createdAt).format("ll")}
-                                            </td>
+                                        <td className='text-center' style={{ fontSize: '14px', fontWeight: '500', color: '#262626', overflow: 'hidden' }} >
+                                            {user.email}
+                                        </td>
 
-                                            <td className='text-center' >
-                                                {
-                                                    user.isBlocked === 0
-                                                        ?
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Active </span>
-                                                            <i className="text-success fas fa-check-circle"></i>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Blocked </span>
-                                                            <i className="text-danger fas fa-user-lock"></i>
-                                                        </>
+                                        <td className='text-center' style={{ fontStyle: 'italic' }} >
+                                            {moment(user.createdAt).format("ll")}
+                                        </td>
 
-                                                }
-                                            </td>
+                                        <td className='text-center' >
+                                            {
+                                                user.isBlocked === 0
+                                                    ?
+                                                    <>
+                                                        <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Active </span>
+                                                        <i className="text-success fas fa-check-circle"></i>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Blocked </span>
+                                                        <i className="text-danger fas fa-user-lock"></i>
+                                                    </>
 
-                                            <td className='text-center' >
-                                                {
-                                                    user.role === 0
-                                                        ?
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> User </span>
-                                                            <i className="fas fa-user text-success"></i>
+                                            }
+                                        </td>
 
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Admin </span>
-                                                            <i className="fas fa-user-shield text-danger"></i>
-                                                        </>
-                                                }
+                                        <td className='text-center' >
+                                            {
+                                                user.role === 0
+                                                    ?
+                                                    <>
+                                                        <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> User </span>
+                                                        <i className="fas fa-user text-success"></i>
 
-                                            </td>
-                                        </tr>
-                                    ))
-                                    :
-                                    administrator.all_users.map(user => (
-                                        <tr key={user._id} >
-                                            <td className='text-center' >
-                                                <Avarta src={user.photo} size="small-avarta" />
-                                            </td>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}>Admin </span>
+                                                        <i className="fas fa-user-shield text-danger"></i>
+                                                    </>
+                                            }
 
-                                            <td style={{ fontSize: '14px', color: '#262626', fontWeight: '500', overflow: 'hidden' }} className='text-center' >
-                                                <span onClick={() => handleChooseUser(user)} role="button">{user.user_name}</span>
-                                            </td>
-
-                                            <td style={{ fontSize: '14px', color: '#8E8E8E', fontWeight: '400', overflow: 'hidden' }} className='text-center' >
-                                                {user.full_name}
-                                            </td>
-
-                                            <td className='text-center' style={{ fontSize: '14px', fontWeight: '500', color: '#262626', overflow: 'hidden' }} >
-                                                {user.email}
-                                            </td>
-
-                                            <td className='text-center' style={{ fontStyle: 'italic' }} >
-                                                {moment(user.createdAt).format("ll")}
-                                            </td>
-
-                                            <td className='text-center' >
-                                                {
-                                                    user.isBlocked === 0
-                                                        ?
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Active </span>
-                                                            <i className="text-success fas fa-check-circle"></i>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> Blocked </span>
-                                                            <i className="text-danger fas fa-user-lock"></i>
-                                                        </>
-
-                                                }
-                                            </td>
-
-                                            <td className='text-center' >
-                                                {
-                                                    user.role === 0
-                                                        ?
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}> User </span>
-                                                            <i className="fas fa-user text-success"></i>
-
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <span style={{ fontSize: '14px', fontWeight: '500', color: '#262626' }}>Admin </span>
-                                                            <i className="fas fa-user-shield text-danger"></i>
-                                                        </>
-                                                }
-
-                                            </td>
-                                        </tr>
-                                    ))
+                                        </td>
+                                    </tr>
+                                ))
                             }
                         </tbody>
                     </table>

@@ -11,7 +11,8 @@ export const TYPES = {
     GET_POST_BY_ID: 'GET_POST_BY_ID',
     RELOAD_LOAD_MORE_POSTS: 'RELOAD_LOAD_MORE_POSTS',
     DELETE_POST: 'DELETE_POST',
-    SHARE_POST: 'SHARE_POST'
+    SHARE_POST: 'SHARE_POST',
+    OPEN_REPORT_MODAL: 'OPEN_REPORT_MODAL'
 }
 
 // Hàm tạo post mới 
@@ -272,6 +273,7 @@ export const deletePost = ({ post, authentication, socket }) => async (dispatch)
     })
 
     try {
+        // eslint-disable-next-line no-unused-vars
         const res = await deleteAPIs(`post/${post._id}`, authentication.token)
 
         //Sau khi người dùng xóa post thì xóa luôn notify tương ứng với post đó 
@@ -292,3 +294,54 @@ export const deletePost = ({ post, authentication, socket }) => async (dispatch)
     }
 }
 
+// Quoc Huy Update Action Date 05/05/2022
+export const reportPost = ({ authentication, postDetail, report_content }) => async (dispatch) => {
+    try {
+        let report = {
+            reporter_id: authentication.user._id,
+            target_id: postDetail._id,
+            category: "post",
+            report_content,
+            target_images: postDetail.images
+        }
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await postAPIs('report_post', report, authentication.token)
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'OPEN_REPORT_MODAL',
+            payload: {
+                open: false,
+                data: {}
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.success
+            }
+        })
+    } catch (error) {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+// End Work for Date 05/05/2022

@@ -3,6 +3,8 @@ const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/userModel')
+const { CLIENT_URL } = process.env
+const sendMail = require('../utils/sendMail')
 
 const authenticationController = {
     register: async (req, res) => {
@@ -76,6 +78,135 @@ const authenticationController = {
             return res.status(500).json({ message: error.message });
         }
     },
+    // Quoc Huy - Update Functional Date 04/05/2022
+    registerEmail: async (req, res) => {
+        try {
+            const { full_name, user_name, email, password } = req.body
+
+            let newUserName = user_name.toLowerCase().replace(/ /g, '')
+
+            const userName = await User.findOne({ user_name: newUserName })
+
+            if (userName) {
+                return res.status(400).json({ message: `Another account is using usename: ${user_name}.` });
+            }
+
+            const userEmail = await User.findOne({ email: email })
+
+            if (userEmail) {
+                return res.status(400).json({ message: `Another account is using email: ${email}.` });
+            }
+
+            // Kiểm tra xem password có đủ 8 ký tự hay không, nếu không thì gửi về client message
+            if (password.length < 8) {
+                return res.status(400).json({ message: "This password is too easy to guess. Please create a new one with more than 8 characters." });
+            }
+
+            // Mã hóa password
+            const passwordHash = await bcrypt.hash(password, 9)
+
+            const newUser = {
+                full_name,
+                user_name: newUserName,
+                email,
+                password: passwordHash
+            }
+
+            const activationToken = createActivationToken(newUser)
+
+            const url = `${CLIENT_URL}/activation/${activationToken}`
+
+            sendMail(email, url, text = 'Verify Your Account', title = 'This Email address is just registered a new account on our network - Merfogram.')
+
+            res.json({ msg: "Register Successfully. Please check your email to activate your account." })
+
+        } catch (error) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
+    activationEmail: async (req, res) => {
+        try {
+            const { activationToken } = req.body
+
+            if (!activationToken) {
+                return res.status(400).json({ message: "Invalid activation token 1!" })
+            }
+
+            const user = jwt.verify(activationToken, process.env.ACTIVATION_TOKEN_SECRET)
+
+            const { full_name, user_name, email, password } = user
+
+            if (!full_name || !user_name || !email || !password) {
+                return res.status(400).json({ message: "Invalid activation token 2!" })
+            }
+
+            const checkEmail = await userModel.findOne({ email: email })
+
+            if (checkEmail) {
+                return res.status(400).json({ message: "Your email already exist. Please sign up with another email address!" })
+            }
+
+            const newAccount = new userModel({
+                full_name,
+                user_name,
+                email,
+                password
+            })
+
+            await newAccount.save();
+
+            res.json({
+                message: "Sign up successful. Please login to use our service.",
+            });
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    },
+    forgotPassword: async (req, res) => {
+        try {
+            const { email } = req.body
+
+            if (!email) {
+                return res.status(400).json({ message: "Please enter your email to reset your password." })
+            }
+
+            const checkEmail = await userModel.findOne({ email: email })
+
+            if (!checkEmail) {
+                return res.status(400).json({ message: "Your email address does not belong to any account. Please check it again." })
+            }
+
+            const accessToken = createAccessToken({ id: checkEmail._id })
+
+            const url = `${CLIENT_URL}/reset_password/${accessToken}`
+
+            sendMail(email, url, text = 'Reset your password', title = 'This Email address is just make a forgot password request on our network - Merfogram.')
+
+            res.json({ message: "Check your Email to reset your password." })
+        } catch (error) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
+    resetPassword: async (req, res) => {
+        try {
+            const { password } = req.body
+
+            if (!password) {
+                return res.status(400).json({ message: "Please enter your password." })
+            }
+
+            const hashPassword = await bcrypt.hash(password, 9)
+
+            await userModel.findOneAndUpdate({ email: req.user.email }, {
+                password: hashPassword
+            })
+
+            res.json({ message: "Reset your password successfully. Please sign in to use our service." })
+        } catch (error) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
+    // Quoc Huy - End Update Functional Date 04/05/2022
     login: async (req, res) => {
         try {
             // Lấy email và password gửi lên từ client
@@ -196,6 +327,11 @@ const createAccessToken = (payload) => {
 const createRefreshToken = (payload) => {
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' })
     return refreshToken
+}
+
+const createActivationToken = (payload) => {
+    const activationToken = jwt.sign(payload, process.env.ACTIVATION_TOKEN_SECRET, { expiresIn: '5m' })
+    return activationToken;
 }
 
 module.exports = authenticationController

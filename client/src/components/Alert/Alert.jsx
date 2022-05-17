@@ -8,6 +8,7 @@ function Alert() {
     const alert = useSelector(state => state.alert)
 
     const dispatch = useDispatch()
+
     return (
         <div>
             {/* Nếu state.alert hiện tại là loading thì show lên Loading component */}
