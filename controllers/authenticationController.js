@@ -129,7 +129,7 @@ const authenticationController = {
             const { activationToken } = req.body
 
             if (!activationToken) {
-                return res.status(400).json({ message: "Invalid activation token 1!" })
+                return res.status(400).json({ message: "Invalid activation token !" })
             }
 
             const user = jwt.verify(activationToken, process.env.ACTIVATION_TOKEN_SECRET)
@@ -137,7 +137,7 @@ const authenticationController = {
             const { full_name, user_name, email, password } = user
 
             if (!full_name || !user_name || !email || !password) {
-                return res.status(400).json({ message: "Invalid activation token 2!" })
+                return res.status(400).json({ message: "Invalid activation token !" })
             }
 
             const checkEmail = await userModel.findOne({ email: email })
