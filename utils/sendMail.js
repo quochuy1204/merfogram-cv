@@ -1,37 +1,37 @@
 const nodemailer = require('nodemailer')
 
-const { MERFOGRAM_GMAIL, MERFOGRAM_GMAIL_PASSWORD } = process.env
-
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    type: "SMTP",
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: MERFOGRAM_GMAIL,
-        pass: MERFOGRAM_GMAIL_PASSWORD
-    },
-    tls: {
-        // do not fail on invalid certs
-        rejectUnauthorized: false,
-    },
-})
+const { MERFOGRAM_GMAIL, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, ACCESS_TOKEN } = process.env
 
 // let transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     type: "SMTP",
 //     host: "smtp.gmail.com",
 //     port: 465,
 //     secure: true,
 //     auth: {
-//         type: "OAuth2",
-//         user: "merfogram@gmail.com",
-//         clientId: "451977096038-j696kqaq6kkgvd0qvq9p315huvvmsc5k.apps.googleusercontent.com",
-//         clientSecret: "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",
-//         refreshToken: "1//04jVB-V7zJllACgYIARAAGAQSNwF-L9IrD6K38ouRdr_NM1tpNz7UQzBuFkTVqNLUnGZODMSUZFMVwzw-FrHIfjRY_0nBP_OYeLs",
-//         accessToken: "ya29.a0ARrdaM_0juHmRIj-6ZBwL543nl86AoNPvQerfNXexxQUA3-KjXBQ2HpWh--t4oPQ-jhnPQRHDKnnnu9TsrnfBbUeer1FaWeL3ZD5Uiu1h7viABUceWL8J5ywi2kGgCUsSzSnpI74XMDCnP7f9f1ou3TowtZw",
-//         expires: 3599,
+//         user: MERFOGRAM_GMAIL,
+//         pass: MERFOGRAM_GMAIL_PASSWORD
 //     },
-// });
+//     tls: {
+//         // do not fail on invalid certs
+//         rejectUnauthorized: false,
+//     },
+// })
+
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        type: "OAuth2",
+        user: MERFOGRAM_GMAIL,
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: ACCESS_TOKEN,
+        expires: 3599,
+    },
+});
 
 const sendMail = (to, url, text, title) => {
     const text2 = text.toLowerCase()
