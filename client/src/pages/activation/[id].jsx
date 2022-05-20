@@ -30,7 +30,9 @@ const Activation = () => {
     return (
         <div className='activation-page'>
             {
-                alert.success ?
+                alert.error ?
+                    <div>Something wrong! Please sign up again!</div>
+                    :
                     <div className='activation-container'>
                         <div className='header-container'>
                             <img className='merfogram-logo' src='https://res.cloudinary.com/hcm-city-university-of-education-and-technology/image/upload/v1651221700/logo/Logo_hcvlt2.svg' alt='logo' />
@@ -53,9 +55,6 @@ const Activation = () => {
                             </div>
                         </div>
                     </div>
-                    :
-                    alert.error &&
-                    <div>Something wrong! Please sign up again!</div>
             }
         </div>
     )

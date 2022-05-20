@@ -1,1 +1,1 @@
-export const BASE_URL = "https://merfogram.herokuapp.com"
+export const BASE_URL = "https://merfogram-staging.herokuapp.com"

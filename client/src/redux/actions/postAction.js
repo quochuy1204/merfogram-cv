@@ -79,6 +79,13 @@ export const getPosts = (token) => async (dispatch) => {
         // Kiểm tra xem có token ko ( tức kiểm tra xem người dùng đã đăng nhập chưa)
         if (token) {
             dispatch({
+                type: 'ALERT',
+                payload: {
+                    loading: true
+                }
+            })
+
+            dispatch({
                 type: 'LOADING_POST',
                 payload: true
             })
@@ -95,6 +102,13 @@ export const getPosts = (token) => async (dispatch) => {
             dispatch({
                 type: 'LOADING_POST',
                 payload: false
+            })
+
+            dispatch({
+                type: 'ALERT',
+                payload: {
+                    loading: false
+                }
             })
         }
     } catch (error) {
@@ -244,6 +258,13 @@ export const unlikePost = ({ authentication, post, socket }) => async (dispatch)
 export const getPostById = ({ authentication, id, detailPosts }) => async (dispatch) => {
     if (detailPosts.every(item => item._id !== id)) {
         try {
+            dispatch({
+                type: 'ALERT',
+                payload: {
+                    loading: true
+                }
+            })
+
             const res = await getAPIs(`post/${id}`, authentication.token)
 
             const newPost = await res.data.post
@@ -253,6 +274,13 @@ export const getPostById = ({ authentication, id, detailPosts }) => async (dispa
             dispatch({
                 type: 'GET_POST_BY_ID',
                 payload: newPost
+            })
+
+            dispatch({
+                type: 'ALERT',
+                payload: {
+                    loading: false
+                }
             })
         } catch (error) {
             dispatch({

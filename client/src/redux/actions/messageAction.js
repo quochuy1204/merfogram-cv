@@ -45,6 +45,13 @@ export const addMessage = ({ authentication, msg, socket }) => async (dispatch) 
 
 export const getConversations = ({ authentication, page = 1 }) => async (dispatch) => {
     try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
         const res = await getAPIs(`conversations?limit=${page * 9}`, authentication.token)
 
         let newArr = [];
@@ -65,6 +72,12 @@ export const getConversations = ({ authentication, page = 1 }) => async (dispatc
             }
         })
 
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
     } catch (error) {
         dispatch({
             type: 'ALERT',

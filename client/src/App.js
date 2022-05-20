@@ -121,7 +121,7 @@ function App() {
           {homepagePost.sharePost.openModal === true && <SharePostModal />}
           {authentication.token && <SocketClient />}
           {notify.open_notification_modal === true && <NotificationModal />}
-          {administrator.open_manage_user_modal && <ManageUserModal />}
+          {administrator.manage_user.open_modal && <ManageUserModal />}
           {profile.change_password_modal === true && <ChangePassword />}
           {homepagePost.openReportModal.open && <ReportPostModal />}
           {administrator.manage_report.open_modal === true && <ManageReportModal />}

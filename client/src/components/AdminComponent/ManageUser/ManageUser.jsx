@@ -5,7 +5,7 @@ import moment from 'moment'
 import Avarta from '../../Avarta/Avarta'
 
 // import { getAPIs } from '../../../utils/fetchAPIs'
-import { ADMIN_TYPES } from '../../../redux/actions/adminAction'
+import { getUserDetail } from '../../../redux/actions/adminAction'
 import { getAllUser } from '../../../redux/actions/adminAction'
 
 import './manageuser.css'
@@ -13,6 +13,8 @@ import './manageuser.css'
 
 function ManageUser(props) {
     const { authentication, administrator } = useSelector(state => state)
+
+    const token = useSelector(state => state.authentication.token)
 
     const dispatch = useDispatch()
 
@@ -34,15 +36,18 @@ function ManageUser(props) {
 
     }, [authentication, dispatch, search, status, role, sort])
 
-    // Hàm xử lý khi người dùng nhấn vào 1 user
-    const handleChooseUser = (user) => {
-        dispatch({
-            type: ADMIN_TYPES.CHOOSE_USER,
-            payload: {
-                open: true,
-                user: user
-            }
-        })
+    // Function to handle when admin click to the username of the user to choose the particular user to manage
+    const handleManageUser = (user) => {
+        if (user) {
+            dispatch(getUserDetail({ user: user, token: token }))
+        } else {
+            return dispatch({
+                type: 'ALERT',
+                payload: {
+                    error: 'Please choose a user.'
+                }
+            })
+        }
     }
 
     // Function to handle on change search state
@@ -91,7 +96,7 @@ function ManageUser(props) {
 
                     <select className='sort-date' name='sort' value={sort} onChange={handleOnChangeSort}>
                         <option value="">Newest</option>
-                        <option value="sort=oldest" >Oldest</option>
+                        <option value="sort=createdAt" >Oldest</option>
                     </select>
 
 
@@ -112,7 +117,7 @@ function ManageUser(props) {
                                 <th scope="col" className='text-center'>Username</th>
                                 <th scope="col" className='text-center'>Name</th>
                                 <th scope="col" className='text-center'>Email</th>
-                                <th scope="col" className='text-center'>Created Date</th>
+                                <th scope="col" className='text-center'>Date</th>
                                 <th scope="col" className='text-center'>Status</th>
                                 <th scope="col" className='text-center'>Role</th>
                             </tr>
@@ -129,7 +134,7 @@ function ManageUser(props) {
                                         </td>
 
                                         <td style={{ fontSize: '14px', color: '#262626', fontWeight: '500', overflow: 'hidden' }} className='text-center' >
-                                            <span onClick={() => handleChooseUser(user)} role="button">{user.user_name}</span>
+                                            <span onClick={() => handleManageUser(user)} role="button">{user.user_name}</span>
                                         </td>
 
                                         <td style={{ fontSize: '14px', color: '#8E8E8E', fontWeight: '400', overflow: 'hidden' }} className='text-center' >
@@ -140,7 +145,10 @@ function ManageUser(props) {
                                             {user.email}
                                         </td>
 
-                                        <td className='text-center' style={{ fontStyle: 'italic' }} >
+                                        <td className='text-center' style={{
+                                            color: '#262626',
+                                            fontSize: '12px'
+                                        }} >
                                             {moment(user.createdAt).format("ll")}
                                         </td>
 

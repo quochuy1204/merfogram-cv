@@ -9,14 +9,10 @@ export const ADMIN_TYPES = {
     ALL_POSTS: 'ALL_POSTS',
     ALL_REPORTS: 'ALL_REPORTS',
 
-    SEARCH_USERS: 'SEARCH_USERS',
-    CHOOSE_USER: 'CHOOSE_USER',
     UPDATE_ALL_USERS: 'UPDATE_ALL_USERS',
-    UPDATE_SEARCH_USERS: 'UPDATE_SEARCH_USERS',
+    MANAGE_USER: 'MANAGE_USER',
 
-    SEARCH_POSTS: 'SEARCH_POSTS',
     UPDATE_ALL_POSTS: 'UPDATE_ALL_POSTS',
-    UPDATE_SEARCH_POSTS: 'UPDATE_SEARCH_POSTS',
 
     MANAGE_REPORT: 'MANAGE_REPORT',
     UPDATE_ALL_REPORTS: 'UPDATE_ALL_REPORTS'
@@ -24,23 +20,22 @@ export const ADMIN_TYPES = {
 
 export const getAllUser = ({ authentication, search, status, role, sort }) => async (dispatch) => {
     try {
-        // dispatch({
-        //     type: 'ALERT',
-        //     payload: {
-        //         loading: true
-        //     }
-        // })
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
 
-        console.log('run')
 
         const res = await getAPIs(`admin/getallusers?user_name[regex]=${search}&${role}&${status}&${sort}`, authentication.token)
 
-        // dispatch({
-        //     type: 'ALERT',
-        //     payload: {
-        //         loading: false
-        //     }
-        // })
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
 
         dispatch({
             type: ADMIN_TYPES.ALL_USERS,
@@ -60,21 +55,21 @@ export const getAllUser = ({ authentication, search, status, role, sort }) => as
 
 export const getAllPosts = ({ authentication, searchByCreator, searchById, status, sort }) => async (dispatch) => {
     try {
-        // dispatch({
-        //     type: 'ALERT',
-        //     payload: {
-        //         loading: true
-        //     }
-        // })
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
 
         const res = await getAPIs(`admin/getallposts?_id=${searchById}&owner_username[regex]=${searchByCreator}&${status}&${sort}`, authentication.token)
 
-        // dispatch({
-        //     type: 'ALERT',
-        //     payload: {
-        //         loading: false
-        //     }
-        // })
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
 
         dispatch({
             type: ADMIN_TYPES.ALL_POSTS,
@@ -92,15 +87,68 @@ export const getAllPosts = ({ authentication, searchByCreator, searchById, statu
     }
 }
 
+export const blockUser = ({ token, user }) => async (dispatch) => {
 
-export const searchUser = ({ authentication, search }) => async (dispatch) => {
+    // Check if the user exist or not 
+    if (!user._id) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Please choose a user."
+            }
+        })
+    }
+
+    // Check if the token exist or not
+    if (!token) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Token invalid!"
+            }
+        })
+    }
     try {
-        const res = await getAPIs(`admin/searchuser?user_name=${search}`, authentication.token)
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await patchAPIs(`admin/blockuser/${user._id}`, null, token)
+
+        let blockedUser = {
+            ...res.data.user,
+            postsLength: user.postsLength
+        }
 
         dispatch({
-            type: ADMIN_TYPES.SEARCH_USERS,
+            type: ADMIN_TYPES.MANAGE_USER,
             payload: {
-                users: res.data.users
+                open_modal: true,
+                user_detail: blockedUser
+            }
+        })
+
+        dispatch({
+            type: ADMIN_TYPES.UPDATE_ALL_USERS,
+            payload: {
+                user: blockedUser
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: "Blocked user!"
             }
         })
     } catch (error) {
@@ -113,65 +161,67 @@ export const searchUser = ({ authentication, search }) => async (dispatch) => {
     }
 }
 
-export const blockUser = ({ authentication, user }) => async (dispatch) => {
-    try {
-        const res = await patchAPIs(`admin/blockuser/${user._id}`, null, authentication.token)
-
-        dispatch({
-            type: ADMIN_TYPES.CHOOSE_USER,
-            payload: {
-                open: true,
-                user: res.data.user
-            }
-        })
-
-        dispatch({
-            type: ADMIN_TYPES.UPDATE_ALL_USERS,
-            payload: {
-                user: res.data.user
-            }
-        })
-
-        dispatch({
-            type: ADMIN_TYPES.UPDATE_SEARCH_USERS,
-            payload: {
-                user: res.data.user
-            }
-        })
-
-    } catch (error) {
-        dispatch({
+export const unblockUser = ({ token, user }) => async (dispatch) => {
+    // Check if the user exist or not 
+    if (!user._id) {
+        return dispatch({
             type: 'ALERT',
             payload: {
-                error: error.response.data.message
+                error: "Please choose a user."
             }
         })
     }
-}
 
-export const unblockUser = ({ authentication, user }) => async (dispatch) => {
+    // Check if the token exist or not
+    if (!token) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Token invalid!"
+            }
+        })
+    }
     try {
-        const res = await patchAPIs(`admin/unblockuser/${user._id}`, null, authentication.token)
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const res = await patchAPIs(`admin/unblockuser/${user._id}`, null, token)
+
+        let unblockUser = {
+            ...res.data.user,
+            postsLength: user.postsLength
+        }
 
         dispatch({
-            type: ADMIN_TYPES.CHOOSE_USER,
+            type: ADMIN_TYPES.MANAGE_USER,
             payload: {
-                open: true,
-                user: res.data.user
+                open_modal: true,
+                user_detail: unblockUser
             }
         })
 
         dispatch({
             type: ADMIN_TYPES.UPDATE_ALL_USERS,
             payload: {
-                user: res.data.user
+                user: unblockUser
             }
         })
 
         dispatch({
-            type: ADMIN_TYPES.UPDATE_SEARCH_USERS,
+            type: 'ALERT',
             payload: {
-                user: res.data.user
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: "Unblock user!"
             }
         })
 
@@ -243,27 +293,6 @@ export const unblockPostAdmin = ({ post, authentication }) => async (dispatch) =
                 post: newPost
             }
         })
-    } catch (error) {
-        dispatch({
-            type: 'ALERT',
-            payload: {
-                error: error.response.data.message
-            }
-        })
-    }
-}
-
-export const searchByPostOwner = ({ authentication, searchUsername }) => async (dispatch) => {
-    try {
-        const res = await getAPIs(`admin/searchpost?username=${searchUsername}`, authentication.token)
-
-        dispatch({
-            type: ADMIN_TYPES.SEARCH_POSTS,
-            payload: {
-                posts: res.data.posts
-            }
-        })
-
     } catch (error) {
         dispatch({
             type: 'ALERT',
@@ -705,3 +734,69 @@ export const unblockPostOnReport = ({ report, token }) => async (dispatch) => {
     }
 }
 // End Work for Date 13/05/22
+
+// Quoc Huy Add new Action Date 19/05/2022
+
+// Function to get all of the information of user that admin clicked on
+export const getUserDetail = ({ user, token }) => async (dispatch) => {
+    // Check if admin choose the user or not
+    // if not return the alert
+    if (!user._id) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Please choose a user."
+            }
+        })
+    }
+
+    // Check if the access token exist or not, if not return the alert
+    if (!token) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Access token invalid."
+            }
+        })
+    }
+
+    try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        const userPosts = await getAPIs(`admin/getposts/${user._id}`, token)
+
+        let userDetail = {
+            ...user,
+            postsLength: userPosts.data.posts.length
+        }
+
+        dispatch({
+            type: ADMIN_TYPES.MANAGE_USER,
+            payload: {
+                open_modal: true,
+                user_detail: userDetail
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+    } catch (error) {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+// End Work for Date 19/05/2022

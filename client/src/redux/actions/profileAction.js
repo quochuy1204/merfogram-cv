@@ -23,6 +23,13 @@ export const getUserProfile = ({ users, id, authentication }) => async (dispatch
     })
 
     try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
         const res = getAPIs(`/user/${id}`, authentication.token)
 
         const res1 = getAPIs(`user_posts/${id}`, authentication.token)
@@ -44,6 +51,13 @@ export const getUserProfile = ({ users, id, authentication }) => async (dispatch
                 isBlocked: users.data.user.isBlocked,
                 ...posts.data,
                 page: 4
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
             }
         })
     } catch (error) {

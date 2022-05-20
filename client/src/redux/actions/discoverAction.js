@@ -9,6 +9,13 @@ export const TYPES = {
 export const getPostsDiscover = (token) => async (dispatch) => {
     try {
         dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        dispatch({
             type: 'LOADING_DISCOVER',
             payload: true
         })
@@ -23,6 +30,13 @@ export const getPostsDiscover = (token) => async (dispatch) => {
         dispatch({
             type: 'LOADING_DISCOVER',
             payload: false
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
         })
     } catch (error) {
         dispatch({
