@@ -800,3 +800,192 @@ export const getUserDetail = ({ user, token }) => async (dispatch) => {
     }
 }
 // End Work for Date 19/05/2022
+
+// ------------------ Quoc Huy Add new Action Date 20/05/2022-------------
+
+// Function to verify user account
+export const verifyAccount = ({ user, token }) => async (dispatch) => {
+    // Check if the user._id exist or not
+    // if the user._id does not exist then return the alert
+    if (!user._id) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Please choose an account."
+            }
+        })
+    }
+
+    // Check if the user verified or not
+    // If the user already verified then return the alert
+    if (user.isVerified === 1) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "This account is already verified."
+            }
+        })
+    }
+
+    // Check if the token exist or not
+    // if the token doesn not exist then return the alert
+    if (!token) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Token is invalid."
+            }
+        })
+    }
+
+    try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        // Request the patch request to server with id params = user._id
+        const res = await patchAPIs(`admin/verify_account/${user._id}`, null, token)
+
+        // Create the verifiedAccount object with all of the information of the updated user response from server
+        // and the postsLength value = user.postsLength 
+        let verifiedAccount = {
+            ...res.data.updatedAccount,
+            postsLength: user.postsLength
+        }
+
+        // Dispatch the MANAGE_USER Action to update the user_detail state for ManageUserModal to display
+        // the updated user account information 
+        dispatch({
+            type: ADMIN_TYPES.MANAGE_USER,
+            payload: {
+                open_modal: true,
+                user_detail: verifiedAccount
+            }
+        })
+
+        // Dispatch the UPDATE_ALL_USERS action to updated the all_users state for ManageUser component to display
+        // the updated user information
+        dispatch({
+            type: ADMIN_TYPES.UPDATE_ALL_USERS,
+            payload: {
+                user: verifiedAccount
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.success
+            }
+        })
+    } catch (error) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+
+// Function to unverify account 
+export const unverifyAccount = ({ user, token }) => async (dispatch) => {
+    // Check if the user exist or not
+    if (!user._id) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Please choose an account."
+            }
+        })
+    }
+
+    // Check if the user already unverify or not
+    if (user.isVerified === 0) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "This account is already unverify."
+            }
+        })
+    }
+
+    // Check if the token exist or not
+    if (!token) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: "Token is invalid."
+            }
+        })
+    }
+
+    try {
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: true
+            }
+        })
+
+        // Request the patch request to server to unverify account
+        const res = await patchAPIs(`admin/unverify_account/${user._id}`, null, token)
+
+        // Create an unverifyAccount object with all information of the res.data.updatedAccount 
+        // and the postsLength = user.postsLength
+        let unverifiedAccount = {
+            ...res.data.updatedAccount,
+            postsLength: user.postsLength
+        }
+
+        // dispatch the MANAGE_USER action to update the user_detail state for ManageUserModal component
+        dispatch({
+            type: ADMIN_TYPES.MANAGE_USER,
+            payload: {
+                open_modal: true,
+                user_detail: unverifiedAccount
+            }
+        })
+
+        // dispatch the UPDATE_ALL_USERS action to update the all_users state for ManageUser component
+        dispatch({
+            type: ADMIN_TYPES.UPDATE_ALL_USERS,
+            payload: {
+                user: unverifiedAccount
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                loading: false
+            }
+        })
+
+        dispatch({
+            type: 'ALERT',
+            payload: {
+                success: res.data.success
+            }
+        })
+    } catch (error) {
+        return dispatch({
+            type: 'ALERT',
+            payload: {
+                error: error.response.data.message
+            }
+        })
+    }
+}
+
+// ------------------ End Work for Date 20/05/22

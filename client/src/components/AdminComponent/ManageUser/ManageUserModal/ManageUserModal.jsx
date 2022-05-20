@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../../Avarta/Avarta';
 
 import { ADMIN_TYPES } from '../../../../redux/actions/adminAction'
-import { blockUser, unblockUser } from '../../../../redux/actions/adminAction'
+import { blockUser, unblockUser, verifyAccount, unverifyAccount } from '../../../../redux/actions/adminAction'
 
 import './manageusermodal.css'
 import moment from 'moment';
@@ -132,6 +132,85 @@ function ManageUserModal(props) {
             })
         }
 
+    }
+
+    // Function to handle when admin click to the Verify Account Button
+    const handleVerifyUser = () => {
+        // Check if the isVerified value === 0 or not 
+        // isVerified === 0 mean that the account is not verify yet
+        // and if isVerified === 1 mean that the account is verified so return the alert
+        if (userDetail.isVerified === 0) {
+            // Check if the account are blocked or not
+            // If the account are blocked so return the alert
+            if (userDetail.isBlocked === 0) {
+                // use confirmAlert to confirm the choice of admin
+                // if admin click to yes button then dispatch the verifyAccount action, otherwise return
+                confirmAlert({
+                    title: 'Verify account',
+                    message: 'Are you want to verify this account?',
+                    buttons: [
+                        {
+                            label: 'Yes',
+                            onClick: () => {
+                                dispatch(verifyAccount({ token: token, user: userDetail }))
+                            }
+                        },
+                        {
+                            label: 'No',
+                            onClick: () => {
+                                return
+                            }
+                        }
+                    ]
+                })
+            } else {
+                return dispatch({
+                    type: 'ALERT',
+                    payload: {
+                        error: "This account is blocked. Please choose another account, or unblock this account first."
+                    }
+                })
+            }
+
+        } else {
+            return dispatch({
+                type: 'ALERT',
+                payload: {
+                    error: "This account is already verified. Please choose another account."
+                }
+            })
+        }
+    }
+
+    // Function to handle when admin click to the Unverify Account
+    const handleUnverifyAccount = () => {
+        if (userDetail._id) {
+            confirmAlert({
+                title: "Unverify account",
+                message: "Are you want to unverify this account?",
+                buttons: [
+                    {
+                        label: 'Yes',
+                        onClick: () => {
+                            dispatch(unverifyAccount({ user: userDetail, token: token }))
+                        }
+                    },
+                    {
+                        label: 'No',
+                        onClick: () => {
+                            return
+                        }
+                    }
+                ]
+            })
+        } else {
+            return dispatch({
+                type: 'ALERT',
+                payload: {
+                    error: "Please choose an account."
+                }
+            })
+        }
     }
 
     return (
@@ -279,9 +358,9 @@ function ManageUserModal(props) {
                         {
                             userDetail.isVerified === 0
                                 ?
-                                <button>Verify Account</button>
+                                <button onClick={handleVerifyUser}>Verify Account</button>
                                 :
-                                <button>Unverified Account</button>
+                                <button onClick={handleUnverifyAccount}>Unverified Account</button>
                         }
 
                         {

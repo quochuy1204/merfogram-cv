@@ -36,4 +36,10 @@ router.patch('/admin/checked_report/:id', authentication, authenticationAdmin, a
 router.patch('/admin/unchecked_report/:id', authentication, authenticationAdmin, adminController.uncheckedReport)
 // End Work for Date 12/05/22
 
+// --------------- Quoc Huy Add new Router Date 20/05/22------------
+router.patch('/admin/verify_account/:id', authentication, authenticationAdmin, adminController.verifyAccount)
+
+router.patch('/admin/unverify_account/:id', authentication, authenticationAdmin, adminController.unverifyAccount)
+// --------------- End Work for Date 20/05/22-----------------------
+
 module.exports = router

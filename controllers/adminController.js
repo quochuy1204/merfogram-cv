@@ -384,9 +384,103 @@ const adminController = {
         } catch (error) {
             return res.status(500).json({ message: error.message })
         }
-    }
+    },
 
     // End Work for Date 12/05/22
+
+    // ----------------- Quoc Huy Add new Features Date 20/05/2022-----------
+
+    // Function to verify account
+    verifyAccount: async (req, res) => {
+        try {
+            // Get the user._id from params id
+            const _id = req.params.id
+
+            // Check if _id exist or not, if not exist then return the error message
+            if (!_id) {
+                return res.status(400).json({ message: "Please choose a user." })
+            }
+
+            // Get the user account information with user _id === _id in the DB
+            const checkUser = await userModel.findOne({ _id: _id }).select("-password")
+
+            // If does not have any user with user _id === _id, return the error message
+            if (!checkUser) {
+                return res.status(400).json({ message: "This account does not exist." })
+            }
+
+            // If this account is already verified, return error
+            if (checkUser.isVerified === 1) {
+                return res.status(400).json({ message: "This account is already verified." })
+            }
+
+            // Find the account with _id === checkUser._id and update the isVerified value = 1
+            const updatedAccount = await userModel.findOneAndUpdate({ _id: checkUser._id }, {
+                isVerified: 1
+            }, {
+                new: true
+            })
+
+            // If does not exist any account with _id === checkUser._id, return error
+            if (!updatedAccount) {
+                return res.status(400).json({ message: "This account does not exist." })
+            }
+
+            res.json({
+                success: "Verify account successful.",
+                updatedAccount: updatedAccount
+            })
+
+        } catch (error) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
+
+    // Function to unverify account
+    unverifyAccount: async (req, res) => {
+        try {
+            // Get the userID from request params
+            const userId = req.params.id
+
+            // If userId does not exist then return the error
+            if (!userId) {
+                return res.status(400).json({ message: "Please choose an account." })
+            }
+
+            // Get the user with the _id = userId into the Database
+            const checkUser = await userModel.findOne({ _id: userId }).select("-password")
+
+            // Check if user with _id = userId exist or not
+            if (!checkUser) {
+                return res.status(400).json({ message: "This account does not exist." })
+            }
+
+            // Check if the isVerify value === 0 or not
+            if (checkUser.isVerified === 0) {
+                return res.status(400).json({ message: "This account is already unverify." })
+            }
+
+            // Find user with _id = checkUser._id and update the isVerified value = 0
+            const updatedAccount = await userModel.findOneAndUpdate({ _id: checkUser._id }, {
+                isVerified: 0
+            }, {
+                new: true
+            })
+
+            // Check if does not exist any user have an _id = checkUser._id, return error message
+            if (!updatedAccount) {
+                return res.status(400).json({ message: "This account does not exist." })
+            }
+
+            res.json({
+                success: "Unverify account.",
+                updatedAccount: updatedAccount
+            })
+        } catch (error) {
+            return res.status(500).json({ message: error.message })
+        }
+    }
+    // ----------------- End Work for Date 20/05/22
 }
 
 module.exports = adminController
